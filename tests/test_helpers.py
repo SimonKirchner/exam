@@ -1,20 +1,20 @@
 """
 Unit tests for the helper functions in helpers.py
 """
+# pylint: disable=C
 
 import unittest
 from unittest.mock import patch
-import os
 import sys
+import os
 
-from source.functions.helpers import clear_terminal, process_coordinates
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from exam.source.helpers import clear_terminal, process_coordinates
 
 
 class TestHelpers(unittest.TestCase):
-    """Test class for utility functions in helpers.py"""
-
     def test_clear_terminal(self) -> None:
-        """Tests if clear_terminal calls the right system commands"""
         with patch("os.name", "nt"), patch("os.system") as mock_system:
             clear_terminal()
             mock_system.assert_called_once_with("cls")
@@ -23,7 +23,6 @@ class TestHelpers(unittest.TestCase):
             mock_system.assert_called_once_with("clear")
 
     def test_process_coordinates_valid(self) -> None:
-        """Tests validation of valid inputs"""
         success, coordinates, error = process_coordinates("2 3", 5, 5)
         self.assertTrue(success)
         self.assertEqual(coordinates, (2, 3))
@@ -45,7 +44,6 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(error, "")
 
     def test_process_coordinates_invalid(self) -> None:
-        """Tests validation of invalid inputs"""
         success, coordinates, error = process_coordinates("1", 5, 5)
         self.assertFalse(success)
         self.assertIsNone(coordinates)

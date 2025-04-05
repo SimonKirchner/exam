@@ -1,20 +1,21 @@
 """
-Tests for AbandonedSpaceStation class
+Unit tests for the game functions in game.py
 """
+# pylint: disable=C
 
 import io
+import os
 import sys
 import unittest
 from unittest.mock import patch, MagicMock, call
 
-from source.functions.game import AbandonedSpaceStation
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from exam.source.game import AbandonedSpaceStation
 
 
 class TestAbandonedSpaceStation(unittest.TestCase):
-    """Test class for AbandonedSpaceStation"""
-
     def setUp(self) -> None:
-        """Setup for each test"""
         self.grid_width = 5
         self.grid_height = 5
         self.hazard_count = 3
@@ -25,7 +26,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
         )
 
     def test_init(self) -> None:
-        """Tests if initialization works correctly"""
         self.assertEqual(self.game.grid_width, self.grid_width)
         self.assertEqual(self.game.grid_height, self.grid_height)
         self.assertEqual(len(self.game.hazard_locations), self.hazard_count)
@@ -34,7 +34,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
         self.assertFalse(self.game.is_victorious)
 
     def test_place_hazards(self) -> None:
-        """Tests if hazards are placed correctly"""
         self.assertEqual(len(self.game.hazard_locations), self.hazard_count)
         for x, y in self.game.hazard_locations:
             self.assertTrue(
@@ -46,7 +45,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
             )
 
     def test_count_adjacent_hazards(self) -> None:
-        """Tests if adjacent counting works correctly"""
         test_game = AbandonedSpaceStation(grid_width=5, grid_height=5, hazard_count=0)
         test_game.hazard_locations = {(1, 1), (2, 2), (3, 3)}
         self.assertEqual(test_game.count_adjacent_hazards(0, 0), 1)
@@ -54,7 +52,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
         self.assertEqual(test_game.count_adjacent_hazards(2, 1), 2)
 
     def test_scan_area_safe(self) -> None:
-        """Tests if scanning a safe area works correctly"""
         test_game = AbandonedSpaceStation(grid_width=5, grid_height=5, hazard_count=0)
         test_game.hazard_locations = {(1, 1), (2, 2)}
         success = test_game.scan_area(0, 0)
@@ -65,7 +62,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
         self.assertEqual(test_game.action_count, 1)
 
     def test_scan_area_hazard(self) -> None:
-        """Tests if scanning a hazard works correctly"""
         test_game = AbandonedSpaceStation(grid_width=5, grid_height=5, hazard_count=0)
         test_game.hazard_locations = {(1, 1)}
         success = test_game.scan_area(1, 1)
@@ -75,7 +71,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
         self.assertEqual(test_game.action_count, 1)
 
     def test_scan_area_invalid(self) -> None:
-        """Tests if invalid coordinates are handled correctly"""
         original_stdout = sys.stdout
         try:
             captured_output = io.StringIO()
@@ -97,7 +92,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
             sys.stdout = original_stdout
 
     def test_scan_area_already_scanned(self) -> None:
-        """Tests if already scanned areas are handled correctly"""
         original_stdout = sys.stdout
         try:
             x, y = 0, 0
@@ -121,7 +115,6 @@ class TestAbandonedSpaceStation(unittest.TestCase):
             sys.stdout = original_stdout
 
     def test_game_won(self) -> None:
-        """Tests if the game is recognized as won"""
         test_game = AbandonedSpaceStation(grid_width=2, grid_height=2, hazard_count=0)
         test_game.hazard_locations = {(1, 1)}
         self.assertFalse(test_game.is_victorious)
@@ -136,16 +129,15 @@ class TestAbandonedSpaceStation(unittest.TestCase):
             "Game was not recognized as won despite all safe areas being scanned",
         )
 
-    @patch("source.functions.helpers.clear_terminal")
+    @patch("exam.source.helpers.clear_terminal")
     def test_play_validation(self, _mock_clear: MagicMock) -> None:
-        """Tests if input validation works correctly"""
         test_game = AbandonedSpaceStation(grid_width=5, grid_height=5, hazard_count=0)
         test_game.hazard_locations = {(3, 3)}
 
         # Mock the input and process_coordinates functions together
         with patch("builtins.input", side_effect=["2 2", "q"]) as mock_input:
-            # Set up the process_coordinates to give valid responses for first input and quit for second
-            with patch("source.functions.game.process_coordinates") as mock_process:
+            # Set up process_coordinates to give valid responses for first input and quit for second
+            with patch("exam.source.game.process_coordinates") as mock_process:
                 mock_process.side_effect = [
                     (True, (2, 2), ""),  # First call: valid coordinates
                     (True, None, ""),  # Second call: quit
@@ -171,15 +163,14 @@ class TestAbandonedSpaceStation(unittest.TestCase):
                         )
                         mock_scan.assert_called_once_with(2, 2)
 
-    @patch("source.functions.helpers.clear_terminal")
+    @patch("exam.source.helpers.clear_terminal")
     def test_play_invalid_input(self, _mock_clear: MagicMock) -> None:
-        """Tests if invalid inputs are handled correctly"""
         test_game = AbandonedSpaceStation(grid_width=5, grid_height=5, hazard_count=0)
         test_game.hazard_locations = {(3, 3)}
 
         # Create a more controlled test with specific inputs and process_coordinates responses
         with patch("builtins.input", side_effect=["invalid", "2 2", "q"]) as mock_input:
-            with patch("source.functions.game.process_coordinates") as mock_process:
+            with patch("exam.source.game.process_coordinates") as mock_process:
                 mock_process.side_effect = [
                     (False, None, "Error message"),  # First call: invalid input
                     (True, (2, 2), ""),  # Second call: valid coordinates

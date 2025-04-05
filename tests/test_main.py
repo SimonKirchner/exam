@@ -1,12 +1,18 @@
+"""
+Unit tests for the main functions in main.py
+"""
+# pylint: disable=C
+
 import unittest
 from unittest.mock import patch, MagicMock
-import sys
 import io
 from contextlib import redirect_stdout
+import os
+import sys
 
-# Assumption: The module structure is as follows
-# Adjust import paths as necessary
-from source.main import _get_custom_settings, main, handle_game_interrupt
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from exam.source.main import _get_custom_settings, main, handle_game_interrupt
 
 
 class TestGetCustomSettings(unittest.TestCase):
@@ -72,16 +78,16 @@ class TestGetCustomSettings(unittest.TestCase):
         # Simulate negative number of hazards
         mock_input.side_effect = ["5", "5", "-3", "5"]
         with redirect_stdout(io.StringIO()) as f:
-            width, height, hazards = _get_custom_settings()
+            _, _, hazards = _get_custom_settings()
         output = f.getvalue()
         self.assertIn("There must be at least 1 hazard", output)
         self.assertEqual(hazards, 5)
 
 
 class TestMain(unittest.TestCase):
-    @patch("source.main.clear_terminal")
+    @patch("exam.source.main.clear_terminal")
     @patch("builtins.input")
-    @patch("source.main.AbandonedSpaceStation")
+    @patch("exam.source.main.AbandonedSpaceStation")
     def test_default_settings(self, mock_game_class, mock_input, mock_clear):
         # Test game with default settings
         mock_input.return_value = "n"
@@ -94,10 +100,10 @@ class TestMain(unittest.TestCase):
         mock_game_class.assert_called_once_with()
         mock_game_instance.play.assert_called_once()
 
-    @patch("source.main.clear_terminal")
-    @patch("source.main._get_custom_settings")
+    @patch("exam.source.main.clear_terminal")
+    @patch("exam.source.main._get_custom_settings")
     @patch("builtins.input")
-    @patch("source.main.AbandonedSpaceStation")
+    @patch("exam.source.main.AbandonedSpaceStation")
     def test_custom_settings(
         self, mock_game_class, mock_input, mock_get_settings, mock_clear
     ):
@@ -114,14 +120,14 @@ class TestMain(unittest.TestCase):
         mock_game_class.assert_called_once_with(10, 12, 20)
         mock_game_instance.play.assert_called_once()
 
-    @patch("source.main.clear_terminal")
+    @patch("exam.source.main.clear_terminal")
     @patch("builtins.input")
     @patch("builtins.print")
-    def test_invalid_customization_input(self, mock_print, mock_input, mock_clear):
+    def test_invalid_customization_input(self, mock_print, mock_input, _):
         # Test invalid input for customization question
         mock_input.side_effect = ["invalid", "n"]
 
-        with patch("source.main.AbandonedSpaceStation") as mock_game_class:
+        with patch("exam.source.main.AbandonedSpaceStation") as mock_game_class:
             mock_game_instance = MagicMock()
             mock_game_class.return_value = mock_game_instance
             main()

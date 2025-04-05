@@ -3,12 +3,18 @@ Game logic for the game 'Abandoned Space Station'
 """
 
 import random
+import sys
+import os
 
 from typing import Set, Tuple, List
 
-from .helpers import clear_terminal, process_coordinates
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from exam.source.helpers import clear_terminal, process_coordinates
 
 
+# pylint: disable=too-many-instance-attributes
+# Attributes required
 class AbandonedSpaceStation:
     """Main class for the game 'Abandoned Space Station'"""
 

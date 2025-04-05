@@ -5,9 +5,12 @@ Main file to start the game
 """
 
 import sys
+import os
 
-from .functions.game import AbandonedSpaceStation
-from .functions.helpers import clear_terminal
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from exam.source.game import AbandonedSpaceStation
+from exam.source.helpers import clear_terminal
 
 
 def _get_custom_settings() -> tuple[int, int, int]:
