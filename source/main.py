@@ -1,7 +1,7 @@
 """
-Abandoned Space Station - A console-based Python game
+Abandoned Space Station - A console-based Python game.
 
-Main file to start the game
+Main file to start the game and manage game initialization.
 """
 
 import sys
@@ -15,7 +15,7 @@ from exam.source.helpers import clear_terminal
 
 def _get_custom_settings() -> tuple[int, int, int]:
     """
-    Gets the user-defined game settings.
+    Get the user-defined game settings.
 
     Returns:
         Tuple with grid_width, grid_height and number of hazards
@@ -63,7 +63,9 @@ def _get_custom_settings() -> tuple[int, int, int]:
 
 
 def main() -> None:
-    """Main function to start the game."""
+    """
+    Main function to start the game.
+    """
     clear_terminal()
     print("Abandoned Space Station\n")
     game = None
@@ -88,7 +90,9 @@ def main() -> None:
 
 
 def handle_game_interrupt() -> None:
-    """Handles KeyboardInterrupt when the game is interrupted by the user."""
+    """
+    Handle KeyboardInterrupt when the game is interrupted by the user.
+    """
     print("\nGame was interrupted by the user. Goodbye!")
     sys.exit(0)
 

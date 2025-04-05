@@ -1,5 +1,7 @@
 """
-Game logic for the game 'Abandoned Space Station'
+Game logic for the game 'Abandoned Space Station'.
+
+Contains the main game class and related functionality.
 """
 
 import random
@@ -13,16 +15,19 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 from exam.source.helpers import clear_terminal, process_coordinates
 
 
-# pylint: disable=too-many-instance-attributes
-# Attributes required
 class AbandonedSpaceStation:
-    """Main class for the game 'Abandoned Space Station'"""
+    """
+    Main class for the game 'Abandoned Space Station'.
+
+    Manages game state, grid, hazards, and player interactions.
+    """
 
     def __init__(
         self, grid_width: int = 5, grid_height: int = 5, hazard_count: int = 5
     ) -> None:
         """
-        Initializes a new game.
+        Initialize a new game instance.
+
         Args:
             grid_width: Width of the game grid (default: 5)
             grid_height: Height of the game grid (default: 5)
@@ -42,7 +47,9 @@ class AbandonedSpaceStation:
         self.action_count = 0
 
     def _place_hazards(self) -> None:
-        """Places hazards randomly on the game grid."""
+        """
+        Place hazards randomly on the game grid.
+        """
         placed = 0
         while placed < self.hazard_count:
             x = random.randint(0, self.grid_width - 1)
@@ -54,7 +61,7 @@ class AbandonedSpaceStation:
 
     def _count_adjacent_hazards(self, x: int, y: int) -> int:
         """
-        Counts the number of adjacent hazards for a given area.
+        Count the number of adjacent hazards for a given area.
 
         Args:
             x: X-coordinate of the area
@@ -68,8 +75,6 @@ class AbandonedSpaceStation:
 
         hazard_count = 0
         for dx in range(-1, 2):
-            # pylint: disable=line-too-long
-            # If Statement needed
             for dy in range(-1, 2):
                 nx, ny = x + dx, y + dy
                 if (dx == 0 and dy == 0) or not (
@@ -95,7 +100,7 @@ class AbandonedSpaceStation:
 
     def scan_area(self, x: int, y: int) -> bool:
         """
-        Scans an area on the game grid.
+        Scan an area on the game grid.
 
         Args:
             x: X-coordinate
@@ -128,8 +133,7 @@ class AbandonedSpaceStation:
 
     def check_victory_condition(self) -> bool:
         """
-        Explicitly checks if all safe areas have been scanned
-        and sets the is_victorious flag accordingly.
+        Check if all safe areas have been scanned and update victory status.
 
         Returns:
             True if the game is won, False otherwise
@@ -144,10 +148,10 @@ class AbandonedSpaceStation:
 
     def display_grid(self, debug: bool = False) -> None:
         """
-        Displays the current game grid.
+        Display the current game grid.
 
         Args:
-            debug: Shows hazards in debug mode
+            debug: Shows hazards in debug mode when True
         """
         print("   ", end="")
         for x in range(self.grid_width):
@@ -166,7 +170,9 @@ class AbandonedSpaceStation:
         print()
 
     def play(self) -> None:
-        """Starts the game and manages the game flow."""
+        """
+        Start the game and manage the game flow.
+        """
         clear_terminal()
         print("\n" + "=" * 40)
         print("  Abandoned Space Station")
@@ -221,7 +227,9 @@ class AbandonedSpaceStation:
         self._show_statistics()
 
     def _show_statistics(self) -> None:
-        """Displays game statistics after the game ends."""
+        """
+        Display game statistics after the game ends.
+        """
         total_areas = self.grid_width * self.grid_height
         safe_areas = total_areas - len(self.hazard_locations)
         completion_percent = (

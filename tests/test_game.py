@@ -1,5 +1,7 @@
 """
-Unit tests for the game functions in game.py
+Unit tests for the game functions in game.py.
+
+Tests all core functionality of the AbandonedSpaceStation class.
 """
 # pylint: disable=C
 

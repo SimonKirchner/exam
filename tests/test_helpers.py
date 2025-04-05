@@ -1,5 +1,7 @@
 """
-Unit tests for the helper functions in helpers.py
+Unit tests for the helper functions in helpers.py.
+
+Tests utility functions used throughout the game.
 """
 # pylint: disable=C
 

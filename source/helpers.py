@@ -1,14 +1,17 @@
 """
-Helper functions for the game 'Abandoned Space Station'
+Helper functions for the game 'Abandoned Space Station'.
+
+Provides utility functions used across the game.
 """
 
 import os
-
 from typing import Tuple, Union
 
 
 def clear_terminal() -> None:
-    """Clears the terminal content for better readability."""
+    """
+    Clear the terminal content for better readability.
+    """
     if os.name == "nt":  # Windows
         _ = os.system("cls")
     else:  # Unix/Linux/Mac
@@ -19,7 +22,7 @@ def process_coordinates(
     input_str: str, grid_width: int, grid_height: int
 ) -> tuple[bool, Union[Tuple[int, int], None], str]:
     """
-    Processes and validates user input for coordinates.
+    Process and validate user input for coordinates.
 
     Args:
         input_str: The user input as string

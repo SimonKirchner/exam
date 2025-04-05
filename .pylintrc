@@ -2,4 +2,5 @@
 
 # 1. Pythonpath adjustment required for absolute path
 # 2. mypy absolut path required
-disable = wrong-import-position, import-error
+# 3. If Statement required
+disable = wrong-import-position, import-error, line-too-long
