@@ -1,5 +1,5 @@
 """
-Game logic for the game 'Cosmic Explorer'
+Game logic for the game 'Abandoned Space Station'
 """
 
 import random
@@ -10,7 +10,7 @@ from .helpers import clear_terminal, process_coordinates
 
 
 class AbandonedSpaceStation:
-    """Main class for the game 'Cosmic Explorer'"""
+    """Main class for the game 'Abandoned Space Station'"""
 
     def __init__(
         self, grid_width: int = 5, grid_height: int = 5, hazard_count: int = 5
@@ -163,7 +163,7 @@ class AbandonedSpaceStation:
         """Starts the game and manages the game flow."""
         clear_terminal()
         print("\n" + "=" * 40)
-        print("  COSMIC EXPLORER")
+        print("  Abandoned Space Station")
         print("=" * 40)
         print("\nWelcome to the derelict space station!")
         print("Your mission is to scan all safe areas,")

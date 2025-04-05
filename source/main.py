@@ -1,5 +1,5 @@
 """
-Cosmic Explorer - A console-based Python game
+Abandoned Space Station - A console-based Python game
 
 Main file to start the game
 """
