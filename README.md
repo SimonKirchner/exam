@@ -56,11 +56,17 @@ Du kannst das Spiel mit verschiedenen Rastergrößen und Gefahrenzahlen anpassen
 ### Projektstruktur
 
 ```
-abandoned-space-station/
+exam/
 ├── __init__.py
+├── __main__.py
 ├── requirements.txt
 ├── mypy.ini
 ├── .pylintrc
+├── README.md
+├── Bewertung.xlsx
+├── documentation/
+│   ├── documentation.pdf
+│   └── documentation.md
 ├── source/
 │   ├── __init__.py
 │   ├── game.py
