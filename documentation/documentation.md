@@ -290,11 +290,8 @@ Die Anwendung verfügt über umfangreiche Unit-Tests, die alle kritischen Funkti
 
 Testausführungsergebnisse:
 ```
-....................................
 ----------------------------------------------------------------------
-Ran 10 tests in 0.017s
-Ran 3 tests in 0.001s
-Ran 11 tests in 0.010s
+Ran 24 tests in 0.017s
 
 OK
 ```
