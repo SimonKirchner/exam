@@ -15,8 +15,8 @@ Die Spielmechanik ist von Minesweeper inspiriert:
 
 1. Repository klonen:
    ```
-   git clone <repository-url>
-   cd abandoned-space-station
+   git clone https://github.com/SimonKirchner/exam
+   cd exam
    ```
 
 2. Abhängigkeiten installieren:
